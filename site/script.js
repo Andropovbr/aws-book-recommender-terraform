@@ -1,9 +1,9 @@
-document.getElementById("search-form").addEventListener("submit", async (e) => {
+document.getElementById("search-form").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const query = document.getElementById("query").value.trim();
+  const query = document.getElementById("search-input").value.trim();
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "Carregando...";
+  resultsDiv.innerHTML = "<p>Buscando livros...</p>";
 
   try {
     const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`);
@@ -14,28 +14,39 @@ document.getElementById("search-form").addEventListener("submit", async (e) => {
       return;
     }
 
-    const books = data.docs.slice(0, 10); // Limita a 10 resultados
+    const normalizedQuery = query.toLowerCase();
 
-    resultsDiv.innerHTML = books.map((book) => {
+    const books = data.docs
+      .filter(book => book.title && book.title.toLowerCase().includes(normalizedQuery))
+      .slice(0, 10); // Limita aos 10 primeiros resultados filtrados
+
+    if (books.length === 0) {
+      resultsDiv.innerHTML = "<p>Nenhum resultado corresponde exatamente ao título pesquisado.</p>";
+      return;
+    }
+
+    resultsDiv.innerHTML = books.map(book => {
       const title = book.title || "Sem título";
       const author = book.author_name ? book.author_name.join(", ") : "Autor desconhecido";
       const year = book.first_publish_year || "Ano desconhecido";
-      const coverId = book.cover_i;
-      const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : null;
+      const cover = book.cover_i
+        ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+        : "https://via.placeholder.com/128x180?text=Sem+Capa";
       const link = book.key ? `https://openlibrary.org${book.key}` : "#";
 
       return `
         <div class="book">
-          ${coverUrl ? `<img src="${coverUrl}" alt="Capa do livro">` : ""}
-          <div class="book-title"><a href="${link}" target="_blank" rel="noopener">${title}</a></div>
-          <div><strong>Autor:</strong> ${author}</div>
-          <div><strong>Ano:</strong> ${year}</div>
+          <img src="${cover}" alt="Capa de ${title}">
+          <div>
+            <h3><a href="${link}" target="_blank" rel="noopener noreferrer">${title}</a></h3>
+            <p><strong>Autor:</strong> ${author}</p>
+            <p><strong>Ano de publicação:</strong> ${year}</p>
+          </div>
         </div>
       `;
     }).join("");
-
   } catch (error) {
-    console.error("Erro ao buscar livros:", error);
-    resultsDiv.innerHTML = "<p>Ocorreu um erro ao buscar os livros.</p>";
+    resultsDiv.innerHTML = "<p>Erro ao buscar livros. Tente novamente mais tarde.</p>";
+    console.error(error);
   }
 });
