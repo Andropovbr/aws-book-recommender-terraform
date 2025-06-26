@@ -5,39 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recomendador de Livros</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
-    h1 { text-align: center; }
-    #resultado { margin-top: 2rem; padding: 1rem; border: 1px solid #ccc; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #results {
+      margin-top: 20px;
+    }
+    .book {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .book:last-child {
+      border-bottom: none;
+    }
+    .book-title {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h1>Descubra um Livro para Ler</h1>
-  <label for="gênero">Escolha um gênero:</label>
-  <select id="gênero">
-    <option value="ficção">Ficção</option>
-    <option value="nao-ficção">Não Ficção</option>
-    <option value="fantasia">Fantasia</option>
-    <option value="terror">Terror</option>
-    <option value="romance">Romance</option>
-  </select>
-  <button onclick="recomendar()">Recomendar</button>
+  <h1>Recomendador de Livros</h1>
+  <form id="search-form">
+    <label for="query">Buscar por autor ou título:</label>
+    <input type="text" id="query" placeholder="Ex: J.K. Rowling ou Harry Potter" required />
+    <button type="submit">Buscar</button>
+  </form>
+  <div id="results"></div>
 
-  <div id="resultado"></div>
-
-  <script>
-    const livros = {
-      "ficção": ["1984 - George Orwell", "O Apanhador no Campo de Centeio - J.D. Salinger"],
-      "nao-ficção": ["Sapiens - Yuval Noah Harari", "O Andar do Bêbado - Leonard Mlodinow"],
-      "fantasia": ["O Nome do Vento - Patrick Rothfuss", "Senhor dos Anéis - Tolkien"],
-      "terror": ["O Iluminado - Stephen King", "Drácula - Bram Stoker"],
-      "romance": ["Orgulho e Preconceito - Jane Austen", "Como Eu Era Antes de Você - Jojo Moyes"]
-    };
-
-    function recomendar() {
-      const gênero = document.getElementById("gênero").value;
-      const sugestao = livros[gênero][Math.floor(Math.random() * livros[gênero].length)];
-      document.getElementById("resultado").innerText = `Livro recomendado: ${sugestao}`;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
