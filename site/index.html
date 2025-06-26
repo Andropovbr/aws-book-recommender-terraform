@@ -7,48 +7,96 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
       padding: 20px;
-      background-color: #f9f9f9;
+      background-color: #f4f4f4;
       color: #333;
     }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
     h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
+
     form {
       display: flex;
-      flex-direction: column;
-      margin-bottom: 30px;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
-    input, button {
+
+    input[type="text"] {
+      flex: 1;
       padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-width: 200px;
     }
-    #results {
-      margin-top: 20px;
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .book {
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #results .book {
       border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+      padding: 15px 0;
+      overflow: auto;
     }
-    .book:last-child {
-      border-bottom: none;
-    }
-    .book-title {
+
+    .book-title a {
+      font-size: 18px;
       font-weight: bold;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .book-title a:hover {
+      text-decoration: underline;
+    }
+
+    .book img {
+      height: 150px;
+      float: left;
+      margin-right: 15px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .book img {
+        float: none;
+        display: block;
+        margin: 0 auto 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Recomendador de Livros</h1>
-  <form id="search-form">
-    <label for="query">Buscar por autor ou título:</label>
-    <input type="text" id="query" placeholder="Ex: J.K. Rowling ou Harry Potter" required />
-    <button type="submit">Buscar</button>
-  </form>
-  <div id="results"></div>
+  <div class="container">
+    <h1>Recomendador de Livros</h1>
+    <form id="search-form">
+      <input type="text" id="query" placeholder="Digite um autor ou título..." required />
+      <button type="submit">Buscar</button>
+    </form>
+    <div id="results"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
