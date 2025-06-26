@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recomendador de Livros</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    h1 { text-align: center; }
+    #resultado { margin-top: 2rem; padding: 1rem; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Descubra um Livro para Ler</h1>
+  <label for="genero">Escolha um gênero:</label>
+  <select id="genero">
+    <option value="ficcao">Ficção</option>
+    <option value="nao-ficcao">Não Ficção</option>
+    <option value="fantasia">Fantasia</option>
+    <option value="terror">Terror</option>
+    <option value="romance">Romance</option>
+  </select>
+  <button onclick="recomendar()">Recomendar</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    const livros = {
+      "ficcao": ["1984 - George Orwell", "O Apanhador no Campo de Centeio - J.D. Salinger"],
+      "nao-ficcao": ["Sapiens - Yuval Noah Harari", "O Andar do Bêbado - Leonard Mlodinow"],
+      "fantasia": ["O Nome do Vento - Patrick Rothfuss", "Senhor dos Anéis - Tolkien"],
+      "terror": ["O Iluminado - Stephen King", "Drácula - Bram Stoker"],
+      "romance": ["Orgulho e Preconceito - Jane Austen", "Como Eu Era Antes de Você - Jojo Moyes"]
+    };
+
+    function recomendar() {
+      const genero = document.getElementById("genero").value;
+      const sugestao = livros[genero][Math.floor(Math.random() * livros[genero].length)];
+      document.getElementById("resultado").innerText = `Livro recomendado: ${sugestao}`;
+    }
+  </script>
+</body>
+</html>
