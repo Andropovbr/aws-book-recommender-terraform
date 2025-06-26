@@ -12,8 +12,8 @@
 </head>
 <body>
   <h1>Descubra um Livro para Ler</h1>
-  <label for="genero">Escolha um gênero:</label>
-  <select id="genero">
+  <label for="gênero">Escolha um gênero:</label>
+  <select id="gênero">
     <option value="ficção">Ficção</option>
     <option value="nao-ficção">Não Ficção</option>
     <option value="fantasia">Fantasia</option>
@@ -34,8 +34,8 @@
     };
 
     function recomendar() {
-      const genero = document.getElementById("genero").value;
-      const sugestao = livros[genero][Math.floor(Math.random() * livros[genero].length)];
+      const gênero = document.getElementById("gênero").value;
+      const sugestao = livros[gênero][Math.floor(Math.random() * livros[gênero].length)];
       document.getElementById("resultado").innerText = `Livro recomendado: ${sugestao}`;
     }
   </script>
